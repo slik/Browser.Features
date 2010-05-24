@@ -1,12 +1,14 @@
-name: "Browser.Features"
+name: Browser.Features
 
-description: "Simple plugin for detecting browser features"
+description: Browser features detector.
 
-license: "[MIT License](http://mootools.net/license.txt)"
+license: MIT-style license.
 
-copyright: "&copy; [Slik](http://diveintoweb.net)"
+copyright: Copyright (c) 2010.
 
-authors: "[Slik](http://diveintoweb.net)"
+authors: Slik (http://diveintoweb.net)
 
-sources:
-  - "Source/Browser.Features.js"
+provides: [Browser.Features]
+
+requires: 
+  - core/1.2.4: Browser
