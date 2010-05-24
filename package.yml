@@ -1,15 +1,5 @@
 name: Browser.Features
-
-description: Browser features detector.
-
-license: MIT-style license.
-
-copyright: Copyright (c) 2010.
-
-authors: 
-  - Slik
-
-provides: [Browser.Features]
-
-requires: 
-  - core/1.2.4: Browser
+author: Slik
+category: Utilities
+tags: [browser, features]
+docs: http://github.com/slik/Browser.Features/blob/master/README.md
