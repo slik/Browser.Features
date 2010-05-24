@@ -6,7 +6,8 @@ license: MIT-style license.
 
 copyright: Copyright (c) 2010.
 
-author: Slik
+authors: 
+  - Slik
 
 provides: [Browser.Features]
 
