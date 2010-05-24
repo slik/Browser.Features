@@ -13,7 +13,8 @@ authors: Slik (http://diveintoweb.net)
 
 provides: [Browser.Features]
 
-requires: [Core, Browser]
+requires: 
+  - core/1.2.4: Browser
 
 ...
 */
