@@ -64,10 +64,10 @@ var Inputs = [
     'datetime-local'
 ];
 
-Inputs.each(function(o){
-    input.setAttribute("type", o);
-    BF.inputs[o] = !!(input.type !== "text");
-});
+for (var i in Inputs){
+    input.setAttribute("type", Inputs[i]);
+    BF.inputs[Inputs[i]] = !!(input.type !== "text");
+}
 
 var Mimes = {
     h264: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"',
@@ -90,9 +90,10 @@ BF.extend({
 });
 
 if(BF.video){
-    BF.video.h264 = BF.canPlay(Mimes.h264);
-    BF.video.ogg = BF.canPlay(Mimes.ogg);
-    BF.video.webm = BF.canPlay(Mimes.webm);
+	BF.video = [];
+    for (var i in Mimes){console.log(i, Mimes[i], BF.canPlay(Mimes[i]))
+        BF.video[i] = BF.canPlay(Mimes[i]);
+    }
 }
 
 })();
