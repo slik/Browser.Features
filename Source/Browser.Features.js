@@ -92,7 +92,7 @@ BF.extend({
 
 if(BF.video){
 	BF.video = {};
-    for (var i in Mimes){console.log(i, Mimes[i], BF.canPlay(Mimes[i]))
+    for (var i in Mimes){
         BF.video[i] = BF.canPlay(Mimes[i]);
     }
 }
