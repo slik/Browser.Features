@@ -44,7 +44,8 @@ BF.extend({
         placeholder: ('placeholder' in input),
         autofocus: ('autofocus' in input)
     },
-    microdata: !!document.getItems
+    microdata: !!document.getItems,
+    crossWindowMessaging: !!window.postMessage
     
 });
 
