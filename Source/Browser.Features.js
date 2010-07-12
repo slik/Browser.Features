@@ -44,8 +44,7 @@ BF.extend({
         placeholder: ('placeholder' in input),
         autofocus: ('autofocus' in input)
     },
-    microdata: !!document.getItems,
-    crossWindowMessaging: !!window.postMessage
+    microdata: !!document.getItems
     
 });
 
@@ -66,6 +65,7 @@ var Inputs = [
 ];
 
 for (var i in Inputs){
+    if(!Inputs.hasOwnProperty(i)) continue;
     input.setAttribute("type", Inputs[i]);
     BF.inputs[Inputs[i]] = !!(input.type !== "text");
 }
@@ -91,7 +91,7 @@ BF.extend({
 });
 
 if(BF.video){
-	BF.video = [];
+	BF.video = {};
     for (var i in Mimes){console.log(i, Mimes[i], BF.canPlay(Mimes[i]))
         BF.video[i] = BF.canPlay(Mimes[i]);
     }
