@@ -21,9 +21,13 @@ requires:
 
 (function(){
     
-var canvas = document.createElement('canvas');
-var video = document.createElement("video");
-var input = document.createElement("input");
+var el = {
+	canvas: document.createElement('canvas'),
+    video: document.createElement("video"),
+    audio: document.createElement("audio"),
+    input: document.createElement("input"),
+	iframe: document.createElement('iframe')
+}
 var BF = Browser.Features;
 
 BF.extend = function(obj){
@@ -34,16 +38,40 @@ BF.extend = function(obj){
 
 BF.extend({
     
-    canvas: !!canvas.getContext,
-    video: !!video.canPlayType,
+	tag: {
+		canvas: !!el.canvas.getContext,
+		
+		video: !!el.video.canPlayType,
+		audio: !!el.audio.canPlayType,
+		command: 'type' in document.createElement('command'),
+		datalist: 'options' in document.createElement('datalist'),
+		details: 'open' in document.createElement('details'),
+		device: 'type' in document.createElement('device'),
+		meter: 'value' in document.createElement('meter'),
+		output: 'value' in document.createElement('output'),
+		progress: 'value' in document.createElement('progress'),
+		time: 'valueAsDate' in document.createElement('time'),
+		form: {
+			validation: 'noValidate' in document.createElement('form')
+		},
+		iframe: {
+			sandbox: 'sandbox' in el.iframe,
+			srcdoc: 'srcdoc' in el.iframe
+		},
+		input: {
+			placeholder: ('placeholder' in el.input),
+			autofocus: ('autofocus' in el.input),
+			type: {}
+		}
+	},
+	
+	media: {},
+	
     localStorage: (('localStorage' in window) && window['localStorage'] !== null),
     workers: !!window.Worker,
     applicationCache: !!window.applicationCache,
     geolocation: !!navigator.geolocation,
-    inputs: {
-        placeholder: ('placeholder' in input),
-        autofocus: ('autofocus' in input)
-    },
+	
     microdata: !!document.getItems
     
 });
@@ -66,35 +94,40 @@ var Inputs = [
 
 for (var i in Inputs){
     if(!Inputs.hasOwnProperty(i)) continue;
-    input.setAttribute("type", Inputs[i]);
-    BF.inputs[Inputs[i]] = !!(input.type !== "text");
+    el.input.setAttribute("type", Inputs[i]);
+    BF.tag.input.type[Inputs[i]] = !!(el.input.type !== "text");
 }
 
 var Mimes = {
-    h264: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"',
-    ogg: 'video/ogg; codecs="theora, vorbis"',
-    webm: 'video/webm; codecs="vp8, vorbis"'
+	audio: {
+		mp3: 'audio/mpeg;',
+		ogg: 'audio/ogg; codecs="vorbis"',
+		wav: 'audio/wav; codecs="1"',
+		aac: 'audio/mp4; codecs="mp4a.40.2"'
+	},
+	video: {
+		h264: 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"',
+		ogg: 'video/ogg; codecs="theora, vorbis"',
+		webm: 'video/webm; codecs="vp8, vorbis"'
+	}
 }
 
 BF.extend({
     
     canvasText: (function(){
         if (!BF.canvas) { return false; }
-        return typeof canvas.getContext('2d').fillText == 'function';
-    })(),
-    
-    canPlay: function(mime){
-        if (!BF.video) { return false; }
-        return video.canPlayType(mime);
-    }
+        return typeof el.canvas.getContext('2d').fillText == 'function';
+    })()
     
 });
 
-if(BF.video){
-	BF.video = {};
-    for (var i in Mimes){
-        BF.video[i] = BF.canPlay(Mimes[i]);
-    }
+for (var context in Mimes){
+	if(BF[context]){
+		BF.media[context] = {};
+		for (var i in Mimes[context]){
+			BF.media[context][i] = el[context].canPlayType(Mimes[context][i]).replace(/no/, '');
+		}
+	}
 }
 
 })();
