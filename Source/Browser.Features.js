@@ -20,24 +20,24 @@ requires:
 */
 
 (function(){
-    
+
 var el = {
 	canvas: document.createElement('canvas'),
-    video: document.createElement("video"),
-    audio: document.createElement("audio"),
-    input: document.createElement("input"),
+	video: document.createElement("video"),
+	audio: document.createElement("audio"),
+	input: document.createElement("input"),
 	iframe: document.createElement('iframe')
 }
 var BF = Browser.Features;
 
 BF.extend = function(obj){
-    for (var i in obj){
-        this[i] = obj[i];
-    }
+	for (var i in obj){
+		this[i] = obj[i];
+	}
 }
 
 BF.extend({
-    
+	
 	tag: {
 		canvas: !!el.canvas.getContext,
 		
@@ -67,35 +67,35 @@ BF.extend({
 	
 	media: {},
 	
-    localStorage: (('localStorage' in window) && window['localStorage'] !== null),
-    workers: !!window.Worker,
-    applicationCache: !!window.applicationCache,
-    geolocation: !!navigator.geolocation,
+	localStorage: (('localStorage' in window) && window['localStorage'] !== null),
+	workers: !!window.Worker,
+	applicationCache: !!window.applicationCache,
+	geolocation: !!navigator.geolocation,
 	
-    microdata: !!document.getItems
-    
+	microdata: !!document.getItems
+	
 });
 
 var Inputs = [
-    'search',
-    'number',
-    'range',
-    'color',
-    'tel',
-    'url',
-    'email',
-    'date',
-    'month',
-    'week',
-    'time',
-    'datetime',
-    'datetime-local'
+	'search',
+	'number',
+	'range',
+	'color',
+	'tel',
+	'url',
+	'email',
+	'date',
+	'month',
+	'week',
+	'time',
+	'datetime',
+	'datetime-local'
 ];
 
 for (var i in Inputs){
-    if(!Inputs.hasOwnProperty(i)) continue;
-    el.input.setAttribute("type", Inputs[i]);
-    BF.tag.input.type[Inputs[i]] = !!(el.input.type !== "text");
+	if(!Inputs.hasOwnProperty(i)) continue;
+	el.input.setAttribute("type", Inputs[i]);
+	BF.tag.input.type[Inputs[i]] = !!(el.input.type !== "text");
 }
 
 var Mimes = {
@@ -113,16 +113,16 @@ var Mimes = {
 }
 
 BF.extend({
-    
-    canvasText: (function(){
-        if (!BF.canvas) { return false; }
-        return typeof el.canvas.getContext('2d').fillText == 'function';
-    })()
-    
+	
+	canvasText: (function(){
+		if (!BF.canvas) { return false; }
+		return typeof el.canvas.getContext('2d').fillText == 'function';
+	})()
+	
 });
 
 for (var context in Mimes){
-	if(BF[context]){
+	if(BF.tag[context]){
 		BF.media[context] = {};
 		for (var i in Mimes[context]){
 			BF.media[context][i] = el[context].canPlayType(Mimes[context][i]).replace(/no/, '');
