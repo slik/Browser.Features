@@ -114,4 +114,12 @@ BF.add('localStorage', function(){
 	return (('localStorage' in window) && window['localStorage'] !== null);
 }, true);
 
+BF.add('workders', function(){
+	return !!window.Worker;
+}, true);
+
+BF.add('applicationCache', function(){
+	return !!window.applicationCache;
+});
+
 })();
