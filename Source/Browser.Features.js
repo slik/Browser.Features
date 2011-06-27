@@ -67,20 +67,6 @@ var tags = {
 		}
 	},
 
-	audio: function(type){
-		var audio = document.createElement('audio');
-		if(!type){
-			return !!audio.canPlayType;
-		}
-		if(arguments.callee()) switch(type){
-			case 'mp3': return audio.canPlayType('audio/mpeg;'); break;
-			case 'ogg': return audio.canPlayType('audio/ogg; codecs="vorbis"'); break;
-			case 'wav': return audio.canPlayType('audio/wav; codecs="1"'); break;
-			case 'aac': return audio.canPlayType('audio/mp4; codecs="mp4a.40.2"'); break;
-			default: return false;
-		}
-	},
-
 	command: function(){
 		return 'type' in document.createElement('command');
 	},
