@@ -43,16 +43,42 @@ BF.add = function(name, func, cache){
 }
 
 var tags = {
-	canvas: function(){
-		return !!document.createElement('canvas').getContext;
+	canvas: function(type){
+		var canvas = document.createElement('canvas');
+		if(!type){
+			return !!canvas.getContext;
+		}
+		if(arguments.callee()) switch(type){
+			'text': return canvas.getContext('2d').fillText == 'function'; break;
+			default: return false;
+		}
 	},
 
-	video: function(){
-		return !!document.createElement("video").canPlayType;
+	video: function(type){
+		var video = document.createElement("video");
+		if(!type){
+			return !!video.canPlayType;
+		}
+		if(arguments.callee()) switch(type){
+			case 'h264': return video.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"'); break;
+			case 'ogg': return video.canPlayType('video/ogg; codecs="theora, vorbis"'); break;
+			case 'webm': return video.canPlayType('video/webm; codecs="vp8, vorbis"'); break;
+			default: return false;
+		}
 	},
 
-	audio: function(){
-		return !!document.createElement("audio").canPlayType;
+	audio: function(type){
+		var audio = document.createElement('audio');
+		if(!type){
+			return !!audio.canPlayType;
+		}
+		if(arguments.callee()) switch(type){
+			case 'mp3': return audio.canPlayType('audio/mpeg;'); break;
+			case 'ogg': return audio.canPlayType('audio/ogg; codecs="vorbis"'); break;
+			case 'wav': return audio.canPlayType('audio/wav; codecs="1"'); break;
+			case 'aac': return audio.canPlayType('audio/mp4; codecs="mp4a.40.2"'); break;
+			default: return false;
+		}
 	},
 
 	command: function(){
@@ -91,6 +117,7 @@ var tags = {
 		var form = document.createElement('form');
 		switch(type){
 			case 'validation': return 'noValidate' in form; break;
+			default: return false;
 		}
 	},
 
