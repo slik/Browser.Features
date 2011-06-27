@@ -110,4 +110,8 @@ BF.add('tag', function(name){
 	}
 }, true);
 
+BF.add('localStorage', function(){
+	return (('localStorage' in window) && window['localStorage'] !== null);
+}, true);
+
 })();
