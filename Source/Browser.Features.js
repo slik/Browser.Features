@@ -99,7 +99,15 @@ var tags = {
 	},
 
 	input: function(type){
-		return type in document.createElement('input');
+		var input = document.createElement('input');
+		if(type in ['placeholder', 'autofocus']){
+			return type in input;
+		} else {
+			if(type == "text") return true;
+
+			input.setAttribute("type", type);
+			return !!(input.type !== "text");
+		}
 	}
 
 };
