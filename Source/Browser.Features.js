@@ -13,14 +13,50 @@ authors: Slik (http://diveintoweb.net)
 
 provides: [Browser.Features]
 
-requires: 
-  - core/1.2.4: Browser
+requires:
+  - core/1.3: Browser
 
 ...
 */
 
 (function(){
-    
+
+var BF = Browser.Features;
+
+BF.add = function(name, func, cache){
+	if(cache){
+		var results = {};
+
+		BF[name] = function(){
+			var args = Array.prototype.slice.apply(arguments);
+			var token = args.join(',');
+
+			if(!results[token]){
+				results[token] = func.apply(null, args);
+			}
+
+			return results[token];
+		}
+	} else {
+		BF[name] = func;
+	}
+}
+
+var tags = {
+	video: function(){
+		return !!document.createElement("video").canPlayType;
+	},
+
+	audio: function(){
+		return !!document.createElement("audio").canPlayType;
+	}
+};
+
+BF.add('tag', function(name){
+	if(tags[name]) return tags[name]();
+}, true);
+
+/*
 var el = {
 	canvas: document.createElement('canvas'),
     video: document.createElement("video"),
@@ -37,10 +73,10 @@ BF.extend = function(obj){
 }
 
 BF.extend({
-    
+
 	tag: {
 		canvas: !!el.canvas.getContext,
-		
+
 		video: !!el.video.canPlayType,
 		audio: !!el.audio.canPlayType,
 		command: 'type' in document.createElement('command'),
@@ -64,16 +100,16 @@ BF.extend({
 			type: {}
 		}
 	},
-	
+
 	media: {},
-	
+
     localStorage: (('localStorage' in window) && window['localStorage'] !== null),
     workers: !!window.Worker,
     applicationCache: !!window.applicationCache,
     geolocation: !!navigator.geolocation,
-	
+
     microdata: !!document.getItems
-    
+
 });
 
 var Inputs = [
@@ -113,12 +149,12 @@ var Mimes = {
 }
 
 BF.extend({
-    
+
     canvasText: (function(){
         if (!BF.canvas) { return false; }
         return typeof el.canvas.getContext('2d').fillText == 'function';
     })()
-    
+
 });
 
 for (var context in Mimes){
@@ -129,5 +165,5 @@ for (var context in Mimes){
 		}
 	}
 }
-
+*/
 })();
