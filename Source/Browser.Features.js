@@ -120,6 +120,14 @@ BF.add('workders', function(){
 
 BF.add('applicationCache', function(){
 	return !!window.applicationCache;
+}, true);
+
+BF.add('geolocation', function(){
+	return !!navigator.geolocation;
+}, true);
+
+BF.add('microdata', function(){
+	return !!document.getItems;
 });
 
 })();
